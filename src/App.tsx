@@ -1,8 +1,11 @@
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-import Menu from './components/Menu';
-import Page from './pages/Page';
+
+import Page from './pages/home';
+import PropertyPage from './pages/property'; // Importa la nueva página
+import LoginPage from './pages/login';
+import NotificationsPage from './pages/notificaciones';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,6 +37,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -41,14 +45,29 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Menu />
+          
           <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/folder/Inbox" />
-            </Route>
-            <Route path="/folder/:name" exact={true}>
-              <Page />
-            </Route>
+
+          <Route path="/" exact={true}>
+            <Redirect to="/login" />
+          </Route>
+
+          <Route path="/login" exact={true}>
+            <LoginPage />
+          </Route>
+
+          <Route path="/folder/:name" exact={true}>
+           <Page />
+          </Route>
+
+          <Route path="/property" exact={true}>
+            <PropertyPage />
+          </Route>
+
+          <Route path="/notificaciones" exact={true}>
+            <NotificationsPage />
+          </Route>
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
