@@ -1,0 +1,7 @@
+{
+  "name": "propiedades_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
