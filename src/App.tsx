@@ -6,6 +6,8 @@ import Page from './pages/home';
 import PropertyPage from './pages/property'; // Importa la nueva página
 import LoginPage from './pages/login';
 import NotificationsPage from './pages/notificaciones';
+import GeolocationPage from './pages/geolocation';
+import DashboardPage from './pages/dashboard';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -36,6 +38,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { LocationProvider } from './components/LocationContext';
+
 
 
 setupIonicReact();
@@ -43,6 +47,7 @@ setupIonicReact();
 const App: React.FC = () => {
   return (
     <IonApp>
+    <LocationProvider>
       <IonReactRouter>
         <IonSplitPane contentId="main">
           
@@ -68,9 +73,17 @@ const App: React.FC = () => {
             <NotificationsPage />
           </Route>
 
+          <Route path="/geolocation" exact={true}>
+            <GeolocationPage />
+          </Route>
+          <Route path="/dashboard"exact={true}>
+          <DashboardPage />
+          </Route>
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
+    </LocationProvider>
     </IonApp>
   );
 };

@@ -1,0 +1,23 @@
+.ion-item-dark {
+    background-color: #333 !important;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+  
+  .ion-item-dark ion-label h2 {
+    font-size: 18px;
+    color: #ffffff;
+  }
+  
+  .ion-item-dark ion-label p {
+    color: #a1a1a1;
+  }
+  
+  .ion-item-dark ion-button {
+    margin-right: 8px;
+  }
+  
+  .ion-thumbnail img {
+    border-radius: 10px;
+  }
+  

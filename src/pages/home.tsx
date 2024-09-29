@@ -21,11 +21,17 @@ import { locationOutline, homeOutline, notificationsOutline, personOutline, brie
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';  // swiper 
 import { useHistory } from 'react-router-dom'; 
+import { useLocation } from '../components/LocationContext'; // Importar el contexto
 
 
 const Home: React.FC = () => {
+    const { address } = useLocation(); // Usar el contexto para obtener la dirección
     const history = useHistory();  // Hook para manejar la navegación
 
+
+    const navigateToGeolocation = () => {
+      history.push('/geolocation');
+    };
     // Función que navega a la página de propiedades
     const goToPropertyPage = () => {
       history.push('/property');  // Navega a la ruta de la página de propiedades
@@ -35,7 +41,8 @@ const Home: React.FC = () => {
       }; 
       const gotonotifaciones = () => {
         history.push('/notificaciones');  // Navega a la ruta de la página de propiedades
-      };    
+      };
+
 
   return (
     <IonPage>
@@ -43,9 +50,11 @@ const Home: React.FC = () => {
         <IonSearchbar placeholder="Buscar " />
       </IonHeader>
       <IonContent fullscreen>
-        <IonItem>
+        {/* Modificar el IonItem para que muestre la dirección cuando esté disponible */}
+        <IonItem button onClick={navigateToGeolocation}>
           <IonIcon icon={locationOutline} slot="start" />
-          <IonLabel>Ingresa tu ubicación...</IonLabel>
+          {/* Mostrar la dirección si existe, de lo contrario mostrar el texto predeterminado */}
+          <IonLabel>{address && address !== 'Ingresa tu ubicación...' ? address : 'Ingresa tu ubicación...'}</IonLabel>
         </IonItem>
 
         <IonCard>
@@ -97,7 +106,6 @@ const Home: React.FC = () => {
           </SwiperSlide>
         </Swiper>
       </IonContent>
-
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/folder/Inbox">
           <IonIcon icon={homeOutline} />
