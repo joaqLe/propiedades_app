@@ -1,4 +1,6 @@
 import React from 'react';
+// Importa React para definir el componente funcional.
+
 import {
   IonContent,
   IonHeader,
@@ -17,19 +19,29 @@ import {
   IonTabBar,
   IonTabButton,
 } from '@ionic/react';
+// Importa varios componentes de Ionic para crear la interfaz del usuario, como `IonPage`, `IonContent`, `IonCard`, y más.
 
-import { useHistory } from 'react-router-dom'; // Importamos useHistory para navegación
+import { useHistory } from 'react-router-dom'; 
+// Importa el hook `useHistory` de React Router para manejar la navegación entre páginas.
+
 import { searchOutline, pencilOutline, locationOutline, homeOutline, notificationsOutline, personOutline } from 'ionicons/icons';
+// Importa íconos específicos de Ionicons para usar en botones y etiquetas dentro de la aplicación.
+
 import { Swiper, SwiperSlide } from 'swiper/react';
+// Importa componentes de `Swiper` para crear un carrusel de propiedades.
+
 import 'swiper/css';
+// Importa el CSS de Swiper para aplicar estilos al carrusel.
 
 const PropertyPage: React.FC = () => {
-  const history = useHistory(); // Inicializamos el hook useHistory
-  
-  const gotologin = () => {
-    history.push('/login');  // Navega a la ruta de la página de login
-  };   
+  const history = useHistory(); 
+  // Define el hook `useHistory` para manejar la navegación.
 
+  // Función para navegar a la página de login
+  const gotologin = () => {
+    history.push('/login');
+    // Redirige a la página de inicio de sesión.
+  };   
 
   // Datos ficticios de propiedades para mostrar en el carrusel
   const properties = [
@@ -39,7 +51,7 @@ const PropertyPage: React.FC = () => {
       name: 'Jose Arrieta',
       reviews: 500,
       rating: 4.8,
-      location: 'peñalolen',
+      location: 'Peñalolen',
       ufPrice: 'UF 4500',
       clpPrice: '$170.290.530 CLP',
     },
@@ -49,7 +61,7 @@ const PropertyPage: React.FC = () => {
       name: 'San Carlos',
       reviews: 320,
       rating: 4.6,
-      location: 'las condes',
+      location: 'Las Condes',
       ufPrice: 'UF 5200',
       clpPrice: '$196.840.000 CLP',
     },
@@ -66,23 +78,32 @@ const PropertyPage: React.FC = () => {
 
   // Función para manejar la navegación al hacer clic en el botón de Home
   const navigateToHome = () => {
-    history.push('/folder/Inbox'); // Redirige a la página principal
+    history.push('/folder/Inbox');
+    // Redirige a la página principal.
   };
+
+  // Función para manejar la navegación a la página de notificaciones
   const gotonotifaciones = () => {
-    history.push('/notificaciones');  // Navega a la ruta de la página de propiedades
+    history.push('/notificaciones');
+    // Redirige a la página de notificaciones.
   };
 
   return (
     <IonPage>
+      {/* Contenedor principal de la página de propiedades */}
+
       <IonHeader>
         {/* Barra superior con búsqueda y ubicación */}
         <IonItem lines="none">
           <IonIcon icon={searchOutline} slot="start" />
+          {/* Ícono de búsqueda al inicio del ítem */}
           <IonLabel>
             <h2>Jose Arrieta</h2>
             <p>Peñalolen • Region Metropolitana • departamento</p>
+            {/* Muestra información de la propiedad */}
           </IonLabel>
           <IonIcon icon={pencilOutline} slot="end" />
+          {/* Ícono de edición al final del ítem */}
         </IonItem>
 
         {/* Filtros de búsqueda */}
@@ -103,6 +124,7 @@ const PropertyPage: React.FC = () => {
           </IonSelect>
 
           <IonLabel slot="end">99 results</IonLabel>
+          {/* Muestra la cantidad de resultados */}
         </IonItem>
       </IonHeader>
 
@@ -111,6 +133,7 @@ const PropertyPage: React.FC = () => {
         <IonCard>
           <div style={{ position: 'relative', height: '300px', width: '100%' }}>
             <IonImg src="/assets/s.jpg" style={{ height: '100%', width: '100%' }} alt="Mapa de propiedades" />
+            {/* Imagen del mapa de propiedades */}
             {mapPrices.map((price) => (
               <IonChip
                 key={price.id}
@@ -123,6 +146,7 @@ const PropertyPage: React.FC = () => {
                 }}
               >
                 {price.price}
+                {/* Muestra los precios de las propiedades en el mapa */}
               </IonChip>
             ))}
           </div>
@@ -134,13 +158,16 @@ const PropertyPage: React.FC = () => {
             <SwiperSlide key={property.id}>
               <IonCard>
                 <IonImg src={property.img} alt={`Imagen de ${property.name}`} />
+                {/* Imagen de la propiedad */}
                 <IonCardHeader>
                   <IonLabel>{property.name}</IonLabel>
                   <IonLabel>⭐ {property.rating} ({property.reviews} reviews) • {property.location}</IonLabel>
+                  {/* Muestra el nombre de la propiedad, la calificación y la ubicación */}
                 </IonCardHeader>
                 <IonCardContent>
                   <IonLabel>{property.ufPrice} / {property.clpPrice}</IonLabel>
                   <IonButton color="dark" slot="end">Contactar</IonButton>
+                  {/* Botón para contactar sobre la propiedad */}
                 </IonCardContent>
               </IonCard>
             </SwiperSlide>
@@ -151,19 +178,22 @@ const PropertyPage: React.FC = () => {
 
       {/* Menú inferior */}
       <IonTabBar slot="bottom">
-        {/* Aquí cambiamos para usar la función navigateToHome en lugar de href */}
+        {/* Botón para navegar a la página principal */}
         <IonTabButton tab="home" onClick={navigateToHome}>
           <IonIcon icon={homeOutline} />
         </IonTabButton>
 
+        {/* Botón para navegar a la página de propiedades */}
         <IonTabButton tab="property" href="/property">
           <IonIcon icon={locationOutline} />
         </IonTabButton>
 
+        {/* Botón para navegar a la página de notificaciones */}
         <IonTabButton tab="notifications" onClick={gotonotifaciones}>
           <IonIcon icon={notificationsOutline} />
         </IonTabButton>
 
+        {/* Botón para navegar a la página de perfil (login) */}
         <IonTabButton tab="profile" onClick={gotologin}>
           <IonIcon icon={personOutline} />
         </IonTabButton>
@@ -173,3 +203,4 @@ const PropertyPage: React.FC = () => {
 };
 
 export default PropertyPage;
+// Exporta el componente `PropertyPage` para su uso en otras partes de la aplicación.
