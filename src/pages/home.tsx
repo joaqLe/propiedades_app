@@ -16,8 +16,9 @@ import {
   IonCol,
   IonTabBar,
   IonTabButton,
+  IonChip,
 } from '@ionic/react';
-import { locationOutline, homeOutline, notificationsOutline, personOutline, briefcaseOutline, businessOutline } from 'ionicons/icons';
+import { locationOutline, homeOutline, notificationsOutline, personOutline, briefcaseOutline, businessOutline, handRight } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useHistory } from 'react-router-dom';
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
         </IonItem>
 
         <IonCard>
-          <IonImg src="/assets/foto1.webp" alt="Imagen de propiedad" />
+          <IonImg src="/assets/banner.webp" alt="Imagen de propiedad" />
           <IonCardHeader>
             <IonCardTitle>Encuentra tu propiedad</IonCardTitle>
           </IonCardHeader>
@@ -53,18 +54,22 @@ const Home: React.FC = () => {
 
         <IonGrid>
           <IonRow>
+            
             <IonCol>
-              <IonIcon icon={briefcaseOutline} style={{ fontSize: '40px' }} />
-              <IonLabel>Oficina</IonLabel>
+              <IonIcon icon={briefcaseOutline} style={{ display :'flex',fontSize: '50px' }} />
+              <IonLabel style={{ marginTop: '10px', display: 'flex' }} >Oficina</IonLabel>
             </IonCol>
+
             <IonCol>
-              <IonIcon icon={businessOutline} style={{ fontSize: '40px' }} />
-              <IonLabel>Departamento</IonLabel>
+              <IonIcon icon={businessOutline} style={{ display:'flex',fontSize: '50px' }} />
+              <IonLabel style={{ marginTop: '10px', display: 'flex'  }} >Departamento</IonLabel>
             </IonCol>
-            <IonCol>
-              <IonIcon icon={homeOutline} style={{ fontSize: '40px' }} />
-              <IonLabel>Casa</IonLabel>
+
+            <IonCol style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column' }}>
+              <IonIcon icon={homeOutline} style={{ fontSize: '50px' }} />
+              <IonLabel style={{ marginTop: '10px' }}>Casa</IonLabel>
             </IonCol>
+
           </IonRow>
         </IonGrid>
 
@@ -76,18 +81,70 @@ const Home: React.FC = () => {
 
         <Swiper spaceBetween={10} slidesPerView={1}>
           <SwiperSlide>
+
             <IonCard>
-              <IonImg src="/assets/foto2.webp" />
+              <IonImg src="/assets/casa1.pano.webp" />
               <IonCardHeader>
-                <IonLabel>Casa Sebastian Elcano / Townhouse</IonLabel>
+                <IonLabel>Departamento Sebastian Elcano </IonLabel>
+
+                <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+                  <IonChip color="primary">
+                    <IonLabel>Departamento</IonLabel>
+                  </IonChip>
+                  <IonChip color="secondary">
+                    <IonLabel>140m2</IonLabel>
+                  </IonChip>
+                  <IonChip color="tertiary">
+                    <IonLabel>Arriendo</IonLabel>
+                  </IonChip>
+                </div>
+
               </IonCardHeader>
             </IonCard>
+
           </SwiperSlide>
           <SwiperSlide>
+
             <IonCard>
-              <IonImg src="/assets/foto1.webp" />
+              <IonImg src="/assets/pano.v.webp" />
               <IonCardHeader>
-                <IonLabel>Casa San Carlos de Apoquindo / Condominio cerrado</IonLabel>
+                <IonLabel>Departamento San Carlos de Apoquindo / Condominio cerrado</IonLabel>
+              
+                <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+                  <IonChip color="primary">
+                    <IonLabel>Departamento</IonLabel>
+                  </IonChip>
+                  <IonChip color="secondary">
+                    <IonLabel>140m2</IonLabel>
+                  </IonChip>
+                  <IonChip color="tertiary">
+                    <IonLabel>Arriendo</IonLabel>
+                  </IonChip>
+                </div>
+
+              </IonCardHeader>
+            </IonCard>
+
+          </SwiperSlide>
+          <SwiperSlide>
+            
+            <IonCard>
+              <IonImg src="/assets/pano.r.webp"/>
+              <IonCardHeader>
+                <IonLabel>Casa alvaro casanova / Condominio cerrado</IonLabel>
+
+              <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+              <IonChip color="primary">
+              < IonLabel>Casa</IonLabel>
+              </IonChip>
+              <IonChip color="secondary">
+              <IonLabel>144m2</IonLabel>
+              </IonChip>
+              <IonChip color="tertiary">
+              <IonLabel>Venta</IonLabel>
+              </IonChip>
+              </div>
+
               </IonCardHeader>
             </IonCard>
           </SwiperSlide>
