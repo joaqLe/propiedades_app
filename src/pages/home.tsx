@@ -17,6 +17,8 @@ import {
   IonTabBar,
   IonTabButton,
   IonChip,
+  IonCardContent,
+  IonButton,
 } from '@ionic/react';
 import { locationOutline, homeOutline, notificationsOutline, personOutline, briefcaseOutline, businessOutline, handRight } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -87,7 +89,7 @@ const Home: React.FC = () => {
               <IonCardHeader>
                 <IonLabel>Departamento Sebastian Elcano </IonLabel>
 
-                <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+                <div style={{ marginTop: '10px', display: 'maxpadding', gap: '5px' }}>
                   <IonChip color="primary">
                     <IonLabel>Departamento</IonLabel>
                   </IonChip>
@@ -97,7 +99,14 @@ const Home: React.FC = () => {
                   <IonChip color="tertiary">
                     <IonLabel>Arriendo</IonLabel>
                   </IonChip>
+
+                  <IonButton slot="end">Contactar</IonButton>
+              
+
                 </div>
+                
+                
+                
 
               </IonCardHeader>
             </IonCard>
@@ -110,7 +119,7 @@ const Home: React.FC = () => {
               <IonCardHeader>
                 <IonLabel>Departamento San Carlos de Apoquindo / Condominio cerrado</IonLabel>
               
-                <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+                <div style={{ marginTop: '10px', display: '', gap: '5px' }}>
                   <IonChip color="primary">
                     <IonLabel>Departamento</IonLabel>
                   </IonChip>
@@ -120,6 +129,7 @@ const Home: React.FC = () => {
                   <IonChip color="tertiary">
                     <IonLabel>Arriendo</IonLabel>
                   </IonChip>
+                  <IonButton slot="end">Contactar</IonButton>
                 </div>
 
               </IonCardHeader>
@@ -133,7 +143,7 @@ const Home: React.FC = () => {
               <IonCardHeader>
                 <IonLabel>Casa alvaro casanova / Condominio cerrado</IonLabel>
 
-              <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+              <div style={{ marginTop: '10px', display: '', gap: '5px' }}>
               <IonChip color="primary">
               < IonLabel>Casa</IonLabel>
               </IonChip>
@@ -143,6 +153,7 @@ const Home: React.FC = () => {
               <IonChip color="tertiary">
               <IonLabel>Venta</IonLabel>
               </IonChip>
+              <IonButton slot="end">Contactar</IonButton>
               </div>
 
               </IonCardHeader>

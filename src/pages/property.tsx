@@ -20,7 +20,21 @@ import {
 import { useHistory } from 'react-router-dom';
 import { searchOutline, pencilOutline, locationOutline, homeOutline, notificationsOutline, personOutline } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import 'swiper/css';
+import L from 'leaflet';
+
+// Configuración de un ícono personalizado para Leaflet
+const customIcon = new L.Icon({
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 const PropertyPage: React.FC = () => {
   const history = useHistory();
@@ -37,6 +51,8 @@ const PropertyPage: React.FC = () => {
       location: 'Peñalolen',
       ufPrice: 'UF 4500',
       clpPrice: '$170.290.530 CLP',
+      latitude: -33.4675, // Coordenadas de ejemplo
+      longitude: -70.6475,
     },
     {
       id: 2,
@@ -47,18 +63,12 @@ const PropertyPage: React.FC = () => {
       location: 'Las Condes',
       ufPrice: 'UF 5200',
       clpPrice: '$196.840.000 CLP',
+      latitude: -33.425, // Coordenadas de ejemplo
+      longitude: -70.561,
     },
   ];
 
-  const mapPrices = [
-    { id: 1, price: 'UF 4500', position: { top: '40%', left: '45%' } },
-    { id: 2, price: 'UF 2300', position: { top: '30%', left: '20%' } },
-    { id: 3, price: 'UF 2500', position: { top: '60%', left: '70%' } },
-    { id: 4, price: 'UF 3800', position: { top: '50%', left: '15%' } },
-  ];
-
   const navigateToHome = () => history.push('/folder/Inbox');
-
   const gotonotifaciones = () => history.push('/notificaciones');
 
   return (
@@ -68,6 +78,7 @@ const PropertyPage: React.FC = () => {
           <IonIcon icon={searchOutline} slot="start" />
           <IonLabel>
             <h2>Jose Arrieta</h2>
+            
             <p>Peñalolen • Region Metropolitana • departamento</p>
           </IonLabel>
           <IonIcon icon={pencilOutline} slot="end" />
@@ -94,26 +105,31 @@ const PropertyPage: React.FC = () => {
       </IonHeader>
 
       <IonContent>
+        {/* Contenedor del mapa con Leaflet */}
         <IonCard>
-          <div style={{ position: 'relative', height: '300px', width: '100%' }}>
-            <IonImg src="/assets/s.jpg" style={{ height: '100%', width: '100%' }} alt="Mapa de propiedades" />
-            {mapPrices.map((price) => (
-              <IonChip
-                key={price.id}
-                style={{
-                  position: 'absolute',
-                  top: price.position.top,
-                  left: price.position.left,
-                  backgroundColor: price.price === 'UF 4500' ? 'black' : 'white',
-                  color: price.price === 'UF 4500' ? 'white' : 'black',
-                }}
+          <MapContainer center={[-33.4675, -70.6475]} zoom={13} style={{ height: '300px', width: '100%' }}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {properties.map((property) => (
+              <Marker
+                key={property.id}
+                position={[property.latitude, property.longitude]}
+                icon={customIcon}
               >
-                {price.price}
-              </IonChip>
+                <Popup>
+                  <IonImg src={property.img} style={{ width: '100px', height: '100px' }} alt={`Imagen de ${property.name}`} />
+                  <b>{property.name}</b><br />
+                  
+                  {property.ufPrice} / {property.clpPrice}
+                </Popup>
+              </Marker>
             ))}
-          </div>
+          </MapContainer>
         </IonCard>
 
+        {/* Carrusel de propiedades utilizando Swiper */}
         <Swiper spaceBetween={10} slidesPerView={1}>
           {properties.map((property) => (
             <SwiperSlide key={property.id}>
@@ -133,6 +149,7 @@ const PropertyPage: React.FC = () => {
         </Swiper>
       </IonContent>
 
+      {/* Menú inferior */}
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" onClick={navigateToHome}>
           <IonIcon icon={homeOutline} />
