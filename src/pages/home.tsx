@@ -20,20 +20,30 @@ import {
   IonCardContent,
   IonButton,
 } from '@ionic/react';
-import { locationOutline, homeOutline, notificationsOutline, personOutline, briefcaseOutline, businessOutline, handRight } from 'ionicons/icons';
+import {
+  locationOutline,
+  homeOutline,
+  notificationsOutline,
+  personOutline,
+  briefcaseOutline,
+  businessOutline,
+} from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from '../components/LocationContext';
+import { useAuth } from './AuthContext'; // Contexto de autenticación
 
 const Home: React.FC = () => {
   const { address } = useLocation();
+  const { currentUser } = useAuth(); // Obtener usuario autenticado
   const history = useHistory();
 
   const navigateToGeolocation = () => history.push('/geolocation');
   const goToPropertyPage = () => history.push('/property');
   const gotologin = () => history.push('/login');
   const gotonotifaciones = () => history.push('/notificaciones');
+  const navigateToDashboard = () => history.push('/dashboard'); // Redirección al dashboard
 
   return (
     <IonPage>
@@ -44,7 +54,9 @@ const Home: React.FC = () => {
       <IonContent fullscreen>
         <IonItem button onClick={navigateToGeolocation}>
           <IonIcon icon={locationOutline} slot="start" />
-          <IonLabel>{address && address !== 'Ingresa tu ubicación...' ? address : 'Ingresa tu ubicación...'}</IonLabel>
+          <IonLabel>
+            {address && address !== 'Ingresa tu ubicación...' ? address : 'Ingresa tu ubicación...'}
+          </IonLabel>
         </IonItem>
 
         <IonCard>
@@ -56,22 +68,20 @@ const Home: React.FC = () => {
 
         <IonGrid>
           <IonRow>
-            
             <IonCol>
-              <IonIcon icon={briefcaseOutline} style={{ display :'flex',fontSize: '50px' }} />
-              <IonLabel style={{ marginTop: '10px', display: 'flex' }} >Oficina</IonLabel>
+              <IonIcon icon={briefcaseOutline} style={{ display: 'flex', fontSize: '50px' }} />
+              <IonLabel style={{ marginTop: '10px', display: 'flex' }}>Oficina</IonLabel>
             </IonCol>
 
             <IonCol>
-              <IonIcon icon={businessOutline} style={{ display:'flex',fontSize: '50px' }} />
-              <IonLabel style={{ marginTop: '10px', display: 'flex'  }} >Departamento</IonLabel>
+              <IonIcon icon={businessOutline} style={{ display: 'flex', fontSize: '50px' }} />
+              <IonLabel style={{ marginTop: '10px', display: 'flex' }}>Departamento</IonLabel>
             </IonCol>
 
             <IonCol style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column' }}>
               <IonIcon icon={homeOutline} style={{ fontSize: '50px' }} />
               <IonLabel style={{ marginTop: '10px' }}>Casa</IonLabel>
             </IonCol>
-
           </IonRow>
         </IonGrid>
 
@@ -83,11 +93,10 @@ const Home: React.FC = () => {
 
         <Swiper spaceBetween={10} slidesPerView={1}>
           <SwiperSlide>
-
             <IonCard>
               <IonImg src="/assets/casa1.pano.webp" />
               <IonCardHeader>
-                <IonLabel>Departamento Sebastian Elcano </IonLabel>
+                <IonLabel>Departamento Sebastian Elcano</IonLabel>
 
                 <div style={{ marginTop: '10px', display: 'maxpadding', gap: '5px' }}>
                   <IonChip color="primary">
@@ -101,24 +110,17 @@ const Home: React.FC = () => {
                   </IonChip>
 
                   <IonButton slot="end">Contactar</IonButton>
-              
-
                 </div>
-                
-                
-                
-
               </IonCardHeader>
             </IonCard>
-
           </SwiperSlide>
-          <SwiperSlide>
 
+          <SwiperSlide>
             <IonCard>
               <IonImg src="/assets/pano.v.webp" />
               <IonCardHeader>
                 <IonLabel>Departamento San Carlos de Apoquindo / Condominio cerrado</IonLabel>
-              
+
                 <div style={{ marginTop: '10px', display: '', gap: '5px' }}>
                   <IonChip color="primary">
                     <IonLabel>Departamento</IonLabel>
@@ -131,31 +133,28 @@ const Home: React.FC = () => {
                   </IonChip>
                   <IonButton slot="end">Contactar</IonButton>
                 </div>
-
               </IonCardHeader>
             </IonCard>
-
           </SwiperSlide>
+
           <SwiperSlide>
-            
             <IonCard>
-              <IonImg src="/assets/pano.r.webp"/>
+              <IonImg src="/assets/pano.r.webp" />
               <IonCardHeader>
-                <IonLabel>Casa alvaro casanova / Condominio cerrado</IonLabel>
+                <IonLabel>Casa Alvaro Casanova / Condominio cerrado</IonLabel>
 
-              <div style={{ marginTop: '10px', display: '', gap: '5px' }}>
-              <IonChip color="primary">
-              < IonLabel>Casa</IonLabel>
-              </IonChip>
-              <IonChip color="secondary">
-              <IonLabel>144m2</IonLabel>
-              </IonChip>
-              <IonChip color="tertiary">
-              <IonLabel>Venta</IonLabel>
-              </IonChip>
-              <IonButton slot="end">Contactar</IonButton>
-              </div>
-
+                <div style={{ marginTop: '10px', display: '', gap: '5px' }}>
+                  <IonChip color="primary">
+                    <IonLabel>Casa</IonLabel>
+                  </IonChip>
+                  <IonChip color="secondary">
+                    <IonLabel>144m2</IonLabel>
+                  </IonChip>
+                  <IonChip color="tertiary">
+                    <IonLabel>Venta</IonLabel>
+                  </IonChip>
+                  <IonButton slot="end">Contactar</IonButton>
+                </div>
               </IonCardHeader>
             </IonCard>
           </SwiperSlide>
@@ -172,7 +171,16 @@ const Home: React.FC = () => {
         <IonTabButton tab="notifications" onClick={gotonotifaciones}>
           <IonIcon icon={notificationsOutline} />
         </IonTabButton>
-        <IonTabButton tab="profile" onClick={gotologin}>
+        <IonTabButton
+          tab="profile"
+          onClick={() => {
+            if (currentUser) {
+              navigateToDashboard(); // Redirige al Dashboard si está autenticado
+            } else {
+              gotologin(); // Redirige al login si no está autenticado
+            }
+          }}
+        >
           <IonIcon icon={personOutline} />
         </IonTabButton>
       </IonTabBar>
