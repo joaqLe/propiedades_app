@@ -9,15 +9,14 @@ import {
   IonInput,
   IonItem,
   IonLabel,
-  IonText,
   IonTextarea,
 } from '@ionic/react';
 import axios from 'axios';
 import { collection, addDoc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../pages/firebaseConfig'; // Firebase configuration file
+import { db } from '../pages/firebaseConfig'; // Configuración de Firebase
 import GeolocationMap from './GeolocationMap';
-import { useAuth } from '../pages/AuthContext'; // Importar contexto de autenticación
+import { useAuth } from '../pages/AuthContext'; // Contexto de autenticación
+import { CLOUDINARY_URL, UPLOAD_PRESET } from '../CloudinaryConfig'; // Configuración de Cloudinary
 
 interface PublishPropertyModalProps {
   isOpen: boolean;
@@ -32,7 +31,9 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
   const [size, setSize] = useState('');
   const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
-  const [image, setImage] = useState<File | null>(null); // Estado para la imagen
+  const [image, setImage] = useState<File | null>(null);
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const { currentUser } = useAuth();
 
   const searchAddress = async () => {
@@ -57,9 +58,18 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
 
   const handleImageUpload = async (): Promise<string> => {
     if (!image) throw new Error('No se seleccionó ninguna imagen.');
-    const imageRef = ref(storage, `properties/${Date.now()}-${image.name}`);
-    const uploadTask = await uploadBytesResumable(imageRef, image);
-    return await getDownloadURL(uploadTask.ref);
+
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', UPLOAD_PRESET);
+
+    try {
+      const response = await axios.post(CLOUDINARY_URL, formData);
+      return response.data.secure_url; // Retorna la URL de la imagen subida
+    } catch (error) {
+      console.error('Error subiendo imagen a Cloudinary:', error);
+      throw new Error('No se pudo subir la imagen.');
+    }
   };
 
   const handlePublish = async () => {
@@ -68,9 +78,9 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
       return;
     }
 
-    if (name && price && description && rooms && size && address && coordinates) {
+    if (name && price && description && rooms && size && address && coordinates && phone && email) {
       try {
-        const imageUrl = await handleImageUpload(); // Subir la imagen a Firebase Storage
+        const imageUrl = await handleImageUpload(); // Subir imagen a Cloudinary
 
         await addDoc(collection(db, 'properties'), {
           name,
@@ -80,7 +90,8 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
           size: parseFloat(size),
           address,
           coordinates,
-          imageUrl, // Guardar la URL de la imagen en Firestore
+          imageUrl, // URL de la imagen subida
+          contact: { phone, email }, // Guardar contacto
           userId: currentUser.uid,
         });
 
@@ -176,6 +187,26 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
           />
         </IonItem>
 
+        <IonItem>
+          <IonLabel position="stacked">Teléfono de contacto</IonLabel>
+          <IonInput
+            type="tel"
+            value={phone}
+            placeholder="Ej: +56912345678"
+            onIonChange={(e) => setPhone(e.detail.value!)}
+          />
+        </IonItem>
+
+        <IonItem>
+          <IonLabel position="stacked">Email de contacto</IonLabel>
+          <IonInput
+            type="email"
+            value={email}
+            placeholder="Ej: contacto@ejemplo.com"
+            onIonChange={(e) => setEmail(e.detail.value!)}
+          />
+        </IonItem>
+
         <IonButton expand="block" color="success" onClick={handlePublish}>
           Publicar Propiedad
         </IonButton>
@@ -188,4 +219,3 @@ const PublishPropertyModal: React.FC<PublishPropertyModalProps> = ({ isOpen, onC
 };
 
 export default PublishPropertyModal;
-  

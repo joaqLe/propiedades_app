@@ -19,7 +19,7 @@ const NotificationsPage: React.FC = () => {
 
   const navigateToHome = () => history.push('/folder/Inbox');
   const navigateToProperty = () => history.push('/property');
-  const navigateToProfile = () => history.push('/login');
+  const navigateTodashboard = () => history.push('/dashboard');
 
   return (
     <IonPage>
@@ -82,7 +82,7 @@ const NotificationsPage: React.FC = () => {
           <IonIcon icon={notificationsOutline} />
         </IonTabButton>
 
-        <IonTabButton tab="profile" onClick={navigateToProfile}>
+        <IonTabButton tab="profile" onClick={navigateTodashboard}>
           <IonIcon icon={personOutline} />
         </IonTabButton>
       </IonTabBar>

@@ -38,6 +38,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { LocationProvider } from './components/LocationContext';
+import PropertyDetailPage from './pages/PropertyDetailPage';
 
 
 
@@ -75,9 +76,13 @@ const App: React.FC = () => {
           <Route path="/geolocation" exact={true}>
             <GeolocationPage />
           </Route>
+
           <Route path="/dashboard"exact={true}>
           <DashboardPage />
           </Route>
+          
+          <Route path="/property/:id" exact={true} component={PropertyDetailPage} />
+
 
           </IonRouterOutlet>
         </IonSplitPane>
